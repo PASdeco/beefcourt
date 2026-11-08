@@ -12,6 +12,7 @@ Two sides stake testnet credits, write their version of the beef, and independen
 [![Network](https://img.shields.io/badge/network-GenLayer%20StudioNet-7C5CFF?style=flat-square)](https://docs.genlayer.com/)
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![Tests](https://img.shields.io/badge/tests-27%20passing-23966B?style=flat-square)](#testing)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](./LICENSE)
 
 </div>
 
@@ -172,6 +173,10 @@ npm test                # vitest run
 ## Design decisions
 
 The reasoning behind every major trade-off — the credits ledger instead of escrowed GEN, the custom validator over `prompt_comparative`, the lifecycle windows, open invite seats, stake limits, and more — is documented in [DECISIONS.md](./DECISIONS.md).
+
+## License
+
+Released under the [MIT License](./LICENSE).
 
 ---
 
