@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Beef Court | Settle it. For good.</title>
+<meta name="description" content="Beef Court: independent AI judges on GenLayer settle your disputes and split the stake on the spot.">
+<meta name="theme-color" content="#150A0E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800;9..144,900&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F7F4F1;--bg2:#EFEAE5;--panel:#FFFFFF;--ink:#2B1219;--mute:#7C666B;--line:#E0D6CF;
+  --brass:#A06E1C;--brassbg:#F3E6CB;--a:#A3213D;--b:#1F6270;--glow:rgba(163,33,61,.10);--shadow:rgba(70,15,30,.28);
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;--sans:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#150A0E;--bg2:#1D1015;--panel:#231319;--ink:#F5EBE4;--mute:#AA9296;--line:#3A2229;
+  --brass:#D6AA58;--brassbg:#392914;--a:#E8607B;--b:#62B7C7;--glow:rgba(232,96,123,.14);--shadow:rgba(0,0,0,.6);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#150A0E;--bg2:#1D1015;--panel:#231319;--ink:#F5EBE4;--mute:#AA9296;--line:#3A2229;
+  --brass:#D6AA58;--brassbg:#392914;--a:#E8607B;--b:#62B7C7;--glow:rgba(232,96,123,.14);--shadow:rgba(0,0,0,.6);color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--sans);-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.glow{background:radial-gradient(900px 480px at 85% -10%,var(--glow),transparent 70%),radial-gradient(700px 400px at -10% 30%,var(--brassbg),transparent 70%)}
+nav{display:flex;align-items:center;justify-content:space-between;padding:22px 0}
+.logo{display:flex;align-items:center;gap:11px;font:800 23px/1 var(--serif);letter-spacing:-.015em}
+.seal{width:34px;height:34px;border-radius:10px;background:var(--ink);color:var(--bg);display:grid;place-items:center}
+.seal svg{width:20px;height:20px}
+.links{display:flex;gap:26px;align-items:center;font-weight:500;font-size:15px;color:var(--mute)}
+.links a:hover{color:var(--ink)}
+.icon{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--panel);color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:transform .25s}
+.icon:hover{transform:rotate(18deg)}
+.icon svg{width:18px;height:18px}
+.sun{display:none}
+:root[data-theme="dark"] .sun{display:block}:root[data-theme="dark"] .moon{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sun{display:block}:root:not([data-theme="light"]) .moon{display:none}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);font:600 15px var(--sans);padding:12px 22px;border-radius:999px;cursor:pointer;transition:transform .15s,opacity .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn.brass{background:var(--brass);border-color:var(--brass);color:#fff}
+.btn[disabled]{opacity:.45;cursor:default;transform:none}
+.hero{display:grid;grid-template-columns:1fr 1.08fr;gap:56px;align-items:start;padding:40px 0 96px}
+h1{font:900 clamp(46px,6.4vw,92px)/.96 var(--serif);letter-spacing:-.035em;margin:0 0 24px;font-variation-settings:"opsz" 144}
+h1 em{font-style:normal;color:var(--a)}
+.lede{font-size:18px;color:var(--mute);max-width:44ch;margin:0 0 30px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px}
+.facts{display:flex;gap:34px;color:var(--mute);font-size:14px;border-top:1px solid var(--line);padding-top:20px}
+.facts b{display:block;color:var(--ink);font:700 28px var(--serif)}
+/* docket */
+.docket{background:var(--panel);border:1px solid var(--line);border-radius:22px;box-shadow:0 40px 80px -36px var(--shadow);overflow:hidden;position:relative}
+.dhead{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 22px;background:var(--bg2);border-bottom:1px solid var(--line);font-size:14px;color:var(--mute)}
+.dhead strong{font:700 17px var(--serif);color:var(--ink)}
+.live{display:inline-flex;align-items:center;gap:8px;color:var(--brass);font-weight:600;white-space:nowrap}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--brass);animation:p 1.8s infinite}
+@keyframes p{50%{opacity:.25}}
+.pick{display:flex;gap:8px;padding:14px 22px 0;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--mute)}
+.chip{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:6px 14px;font:500 13px var(--sans);cursor:pointer;transition:all .15s}
+.chip:hover,.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.sides{display:grid;grid-template-columns:1fr 1fr;margin-top:14px;border-top:1px solid var(--line)}
+.side{padding:20px 22px;display:flex;flex-direction:column;gap:8px}
+.side+.side{border-left:1px solid var(--line)}
+.side input{font:700 18px var(--serif);background:none;border:0;color:var(--ink);padding:0;width:100%}
+.tag{font-size:13px;font-weight:700}
+.a .tag{color:var(--a)}.b .tag{color:var(--b)}
+.side textarea{font:400 15px/1.55 var(--sans);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px;resize:none;height:128px;width:100%}
+.stake{display:flex;align-items:center;gap:14px;padding:14px 22px;border-top:1px solid var(--line);font-size:14px;color:var(--mute)}
+.stake input{flex:1;accent-color:var(--brass)}
+.stake output{font:700 19px var(--serif);color:var(--ink);min-width:82px;text-align:right}
+.bench{padding:18px 22px;border-top:1px solid var(--line)}
+.bench h3{margin:0 0 12px;font:600 14px var(--sans);color:var(--mute)}
+.panel{display:flex;gap:9px;flex-wrap:wrap}
+.j{width:44px;height:44px;border-radius:50%;border:1.5px dashed var(--line);display:grid;place-items:center;font:700 13px var(--sans);color:var(--mute);transition:all .35s}
+.j.va{background:var(--a);border:1.5px solid var(--a);color:#fff;transform:scale(1.08)}
+.j.vb{background:var(--b);border:1.5px solid var(--b);color:#111;transform:scale(1.08)}
+.runrow{padding:0 22px 22px}.runrow .btn{width:100%;padding:15px}
+.verdict{display:none;padding:26px 22px 24px;border-top:1px solid var(--line);background:var(--brassbg);position:relative}
+.verdict.on{display:block;animation:rise .5s ease}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+.stamp{position:absolute;right:18px;top:16px;border:2px solid var(--a);color:var(--a);border-radius:8px;padding:3px 12px;font:900 15px var(--serif);transform:rotate(-8deg);animation:st .5s .25s both}
+@keyframes st{from{opacity:0;transform:rotate(-8deg) scale(2.2)}to{opacity:.9;transform:rotate(-8deg) scale(1)}}
+.verdict h2{font:900 30px/1.08 var(--serif);margin:0 90px 8px 0;letter-spacing:-.015em}
+.verdict p{margin:0 0 18px;opacity:.85;font-size:15px;max-width:52ch}
+.bar{display:flex;height:12px;border-radius:99px;overflow:hidden;background:var(--line)}
+.bar i{display:block;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.pay{display:flex;justify-content:space-between;gap:10px;margin:10px 0 18px;font-size:14px;font-weight:600}
+.meters{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;margin-bottom:20px;font-size:13px}
+.m{display:grid;grid-template-columns:62px 1fr 28px;gap:8px;align-items:center;color:var(--mute)}
+.m span:last-child{color:var(--ink);font-weight:700;text-align:right}
+.m div{height:6px;border-radius:9px;background:var(--line);overflow:hidden}.m div i{display:block;height:100%;width:0;transition:width .9s}
+.vbtns{display:flex;gap:10px;flex-wrap:wrap}
+.vbtns .btn{padding:10px 18px;font-size:14px}
+/* sections */
+section{padding:92px 0;border-top:1px solid var(--line)}
+h2.t{font:900 clamp(32px,4vw,52px)/1.04 var(--serif);letter-spacing:-.025em;margin:0 0 14px;max-width:17ch}
+.sub{color:var(--mute);max-width:52ch;margin:0 0 46px;font-size:17px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--panel)}
+.step{padding:34px 30px}
+.step+.step{border-left:1px solid var(--line)}
+.step .n{width:46px;height:46px;border-radius:50%;background:var(--brassbg);color:var(--brass);display:grid;place-items:center;font:800 20px var(--serif);margin-bottom:22px}
+.step h3{font:700 22px var(--serif);margin:0 0 8px}
+.step p{margin:0;color:var(--mute);font-size:15px}
+.scroll{overflow-x:auto}
+.cases{border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--panel);min-width:660px}
+.row{display:grid;grid-template-columns:1.7fr 1.1fr 1fr 90px;gap:18px;align-items:center;padding:20px 28px;font-size:15px;transition:background .2s}
+.row:hover{background:var(--bg2)}
+.row+.row{border-top:1px solid var(--line)}
+.q{font:700 18px var(--serif)}.q small{display:block;color:var(--mute);font:400 13px var(--sans)}
+.mini{display:flex;height:8px;border-radius:99px;overflow:hidden;background:var(--line)}
+.mini i{background:var(--a)}.mini i+i{background:var(--b)}
+.amt{text-align:right;font-weight:700}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.bch{display:grid;gap:0;border:1px solid var(--line);border-radius:22px;background:var(--panel);overflow:hidden}
+.bi{display:flex;gap:16px;align-items:center;padding:18px 22px}
+.bi+.bi{border-top:1px solid var(--line)}
+.bi .j{flex:none;border:0;background:var(--ink);color:var(--bg);font:800 16px var(--serif)}
+.bi b{display:block;font:700 17px var(--serif)}.bi span{color:var(--mute);font-size:14px}
+.two p{color:var(--mute);font-size:17px;max-width:48ch}
+.band{background:var(--ink);color:var(--bg);border-radius:28px;padding:64px 40px;text-align:center}
+.band h2{font:900 clamp(34px,4.6vw,60px)/1 var(--serif);letter-spacing:-.03em;margin:0 auto 14px;max-width:16ch}
+.band p{opacity:.7;margin:0 auto 28px;max-width:44ch}
+.band .btn{background:var(--brass);border-color:var(--brass);color:#fff}
+footer{padding:44px 0 56px;color:var(--mute);font-size:14px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.net{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:9px 14px;color:var(--ink)}
+.net i{width:8px;height:8px;border-radius:50%;background:#2fa56b}
+.net.bad i{background:var(--a)}
+.net[hidden]{display:none}
+.modal{position:fixed;inset:0;background:rgba(10,3,6,.6);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px;z-index:30}
+.modal.on{display:flex;animation:rise .25s ease}
+.sheet{background:var(--panel);border:1px solid var(--line);border-radius:24px;width:100%;max-width:420px;padding:26px;box-shadow:0 40px 80px -30px var(--shadow)}
+.sheet h3{font:900 26px var(--serif);margin:0 0 4px;letter-spacing:-.015em}
+.sheet p{margin:0 0 18px;color:var(--mute);font-size:14px}
+.wopt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;color:var(--ink);font:600 15px var(--sans);cursor:pointer;transition:border-color .15s,transform .15s}
+.wopt:hover{border-color:var(--brass);transform:translateY(-1px)}
+.wopt b{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--ink);color:var(--bg);font:800 15px var(--serif)}
+.wopt small{display:block;color:var(--mute);font:400 12px var(--sans)}
+.sheet .x{margin-top:6px;background:none;border:0;color:var(--mute);font:500 14px var(--sans);cursor:pointer;width:100%;padding:8px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:999px;font-weight:600;font-size:14px;opacity:0;pointer-events:none;transition:all .3s;z-index:20}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media (max-width:900px){
+  .hero,.two{grid-template-columns:1fr;gap:38px}
+  .steps{grid-template-columns:1fr}.step+.step{border-left:0;border-top:1px solid var(--line)}
+  .links a{display:none}
+  .sides{grid-template-columns:1fr}.side+.side{border-left:0;border-top:1px solid var(--line)}
+  .meters{grid-template-columns:1fr}.band{padding:48px 22px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="glow"><div class="wrap">
+<nav>
+  <a class="logo" href="#top" aria-label="Beef Court home"><span class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4l6 6-3 3-6-6z"/><path d="M11 9L4 16l3 3 7-7"/><path d="M3 21h10"/></svg></span>Beef Court</a>
+  <div class="links"><a href="#how">How it works</a><a href="#cases">Verdicts</a><a href="#bench">The bench</a>
+    <button class="icon" id="theme" aria-label="Switch between light and dark mode">
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+    <span class="net" id="net" hidden><i></i>Studionet</span>
+    <button class="btn ghost" id="wallet" data-wallet-connect>Connect wallet</button>
+    <a class="btn" href="#docket" style="display:inline-flex;color:var(--bg)">File a case</a></div>
+</nav>
+
+<header class="hero" id="top">
+  <div>
+    <h1>Settle it. <em>For good.</em></h1>
+    <p class="lede">You tell your side. They tell theirs. A bench of independent AI judges reads both, votes separately, and splits the stake on the spot. No favourites, no mods, no more dishes drama.</p>
+    <div class="cta"><a class="btn brass" href="#docket">Try a live case</a><a class="btn ghost" href="#how">See how it works</a></div>
+    <div class="facts"><div><b>5</b>independent judges</div><div><b>11</b>on appeal</div><div><b>0</b>humans deciding</div></div>
+  </div>
+
+  <div class="docket" id="docket">
+    <div class="dhead"><strong id="cn">Case No. 0147</strong><span class="live"><i></i>Open for ruling</span></div>
+    <div class="pick"><span>Bring a case:</span><button class="chip on" data-k="0">Dishes</button><button class="chip" data-k="1">Rent split</button><button class="chip" data-k="2">Late to the trip</button><button class="chip" data-k="3">Your own</button></div>
+    <div class="sides">
+      <div class="side a"><span class="tag">Plaintiff</span><input id="nA" aria-label="Plaintiff name"><textarea id="tA" aria-label="Plaintiff statement"></textarea></div>
+      <div class="side b"><span class="tag">Defendant</span><input id="nB" aria-label="Defendant name"><textarea id="tB" aria-label="Defendant statement"></textarea></div>
+    </div>
+    <div class="stake"><span>Stake</span><input id="stake" type="range" min="10" max="200" step="10" value="50" aria-label="Stake amount"><output id="so">50 GEN</output></div>
+    <div class="bench"><h3 id="bl">The bench is empty</h3><div class="panel" id="panel"></div></div>
+    <div class="runrow"><button class="btn" id="go">Call the bench</button></div>
+    <div class="verdict" id="vd" aria-live="polite">
+      <span class="stamp">Case closed</span>
+      <h2 id="vh"></h2><p id="vp"></p>
+      <div class="bar"><i id="ba" style="background:var(--a);width:0"></i><i id="bb" style="background:var(--b);width:0"></i></div>
+      <div class="pay"><span id="pa"></span><span id="pb"></span></div>
+      <div class="meters" id="mt"></div>
+      <div class="vbtns"><button class="btn ghost" id="appeal">Appeal to 11 judges</button><button class="btn ghost" id="share">Copy case link</button></div>
+    </div>
+  </div>
+</header>
+</div></div>
+
+<section id="how"><div class="wrap">
+  <h2 class="t">From beef to verdict in under a minute</h2>
+  <p class="sub">Every ruling is recorded on-chain, so nobody can quietly rewrite what was decided.</p>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><h3>File the case</h3><p>Describe the problem in your own words and lock in a stake. Send the link to the other side so they can respond.</p></div>
+    <div class="step"><div class="n">2</div><h3>The bench deliberates</h3><p>Independent validators, each running a different AI model, read both statements and vote without seeing each other’s votes.</p></div>
+    <div class="step"><div class="n">3</div><h3>Money moves</h3><p>The stake splits in line with the vote. Unhappy? Appeal once to a bigger panel for a second ruling.</p></div>
+  </div>
+</div></section>
+
+<section id="cases"><div class="wrap">
+  <h2 class="t">Recent verdicts</h2>
+  <p class="sub">Real beef, settled. The bar shows how the bench split.</p>
+  <div class="scroll"><div class="cases">
+    <div class="row"><div class="q">Who finished the jollof?<small>Case 0146, roommates</small></div><div>Chidi wins 4–1</div><div class="mini"><i style="width:80%"></i><i style="width:20%"></i></div><div class="amt">80 GEN</div></div>
+    <div class="row"><div class="q">Late to the group trip<small>Case 0145, friends</small></div><div>Split decision 3–2</div><div class="mini"><i style="width:60%"></i><i style="width:40%"></i></div><div class="amt">120 GEN</div></div>
+    <div class="row"><div class="q">The unpaid Netflix share<small>Case 0144, housemates</small></div><div>Bisi wins 5–0</div><div class="mini"><i style="width:100%"></i></div><div class="amt">30 GEN</div></div>
+    <div class="row"><div class="q">Music past midnight<small>Case 0143, neighbours</small></div><div>Ife wins 3–2</div><div class="mini"><i style="width:60%"></i><i style="width:40%"></i></div><div class="amt">60 GEN</div></div>
+  </div></div>
+</div></section>
+
+<section id="bench"><div class="wrap two">
+  <div>
+    <h2 class="t">A bench you can’t shop around</h2>
+    <p>Each judge is a separate validator running its own AI model with its own way of weighing a case. They don’t have to use the same words, only reach the same meaning. To win unfairly you’d have to fool all of them at once.</p>
+  </div>
+  <div class="bch">
+    <div class="bi"><span class="j">A</span><div><b>Judge Ada</b><span>Reads for facts and dates</span></div></div>
+    <div class="bi"><span class="j">K</span><div><b>Judge Kofi</b><span>Weighs fairness to both sides</span></div></div>
+    <div class="bi"><span class="j">M</span><div><b>Judge Mei</b><span>Rewards effort and follow-through</span></div></div>
+    <div class="bi"><span class="j">R</span><div><b>Judge Ravi</b><span>Spots exaggeration</span></div></div>
+    <div class="bi"><span class="j">S</span><div><b>Judge Sol</b><span>Favours the peacemaker</span></div></div>
+  </div>
+</div></section>
+
+<div class="wrap" style="padding-bottom:20px"><div class="band">
+  <h2>Got beef? Bring it.</h2>
+  <p>Free to try. Stake only when you’re ready to be ruled against.</p>
+  <a class="btn" href="#docket">File a case</a>
+</div>
+<footer><span>Beef Court is a prototype running a simulated bench. On-chain rulings come next.</span><span>Built on GenLayer</span></footer></div>
+<div class="modal" id="wm" role="dialog" aria-modal="true" aria-labelledby="wmt">
+  <div class="sheet"><h3 id="wmt">Connect a wallet</h3><p>Choose a wallet to file cases and receive payouts on GenLayer Studionet.</p>
+    <button class="wopt" data-w="MetaMask"><b>M</b><div>MetaMask<small>Browser extension or mobile</small></div></button>
+    <button class="wopt" data-w="Rabby"><b>R</b><div>Rabby<small>Browser extension</small></div></button>
+    <button class="wopt" data-w="OKX Wallet"><b>O</b><div>OKX Wallet<small>Browser extension or mobile</small></div></button>
+    <button class="wopt" data-w="WalletConnect"><b>W</b><div>WalletConnect<small>Scan with any mobile wallet</small></div></button>
+    <button class="x" id="wx">Cancel</button></div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const root=document.documentElement;
+try{const t=localStorage.getItem('bc-theme');if(t)root.dataset.theme=t}catch(e){}
+$('theme').onclick=()=>{
+  const dark=root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+  const n=dark?'light':'dark';root.dataset.theme=n;try{localStorage.setItem('bc-theme',n)}catch(e){}
+};
+const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2200)};
+const CASES=[
+ ['Case No. 0147: The dishes','Tunde','The dishes sat in the sink for four days. I washed them twice last week and nobody said thank you. I’m not the house maid.','Amaka','I was on night shift all week and ate out. Those were his pots from Sunday. I’ll wash mine today and I’m sorry it dragged.'],
+ ['Case No. 0148: The rent split','Zainab','I pay two thirds of the rent because I took the bigger room, and we agreed that in writing. Now she says it should be half and half.','Dayo','The bigger room has no window and the heater never worked. I never agreed to pay more than half. I always paid on time.'],
+ ['Case No. 0149: Late to the trip','Efe','We left at eight sharp as planned. He showed up at ten, we lost our booking, and he never apologised. He is always late.','Kunle','My bus broke down and I called twice. I paid for my own ride and I will cover the booking fee. I tried my best to get there.'],
+ ['Case No. 0150: Your case','','','','']];
+let busy=false,cur=0;
+function load(k){
+  cur=k;const c=CASES[k];document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',+x.dataset.k===k));
+  $('cn').textContent=c[0];$('nA').value=c[1];$('tA').value=c[2];$('nB').value=c[3];$('tB').value=c[4];
+  $('nA').placeholder='Plaintiff';$('nB').placeholder='Defendant';$('tA').placeholder='Tell your side…';$('tB').placeholder='Tell your side…';
+  $('vd').classList.remove('on');build(5);$('bl').textContent='The bench is empty';$('go').textContent='Call the bench';
+  if(k===3)$('tA').focus();
+}
+document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{if(!busy)load(+b.dataset.k)});
+$('stake').oninput=e=>$('so').textContent=e.target.value+' GEN';
+const P=$('panel');
+function build(n){P.innerHTML='';for(let i=0;i<n;i++){const d=document.createElement('div');d.className='j';d.textContent=i+1;P.appendChild(d)}}
+const cnt=(t,r)=>(t.match(r)||[]).length;
+function score(t){
+  const facts=Math.min(100,25+t.length/3+cnt(t,/\d|monday|sunday|week|days?|night|shift|written|agreed/gi)*8);
+  const fair=Math.max(8,Math.min(100,58+cnt(t,/sorry|apolog|understand|my fault|cover/gi)*14-cnt(t,/always|never|hate|maid|stupid|lazy/gi)*13));
+  const effort=Math.min(100,22+cnt(t,/washed|paid|called|tried|will|today|cover|on time|twice/gi)*14);
+  return [facts,fair,effort].map(Math.round);
+}
+function run(n){
+  if(busy)return;busy=true;$('go').disabled=true;$('appeal').disabled=true;
+  $('vd').classList.remove('on');build(n);$('bl').textContent='The bench is deliberating…';
+  const nA=$('nA').value.trim()||'Plaintiff',nB=$('nB').value.trim()||'Defendant',st=+$('stake').value;
+  const sa=score($('tA').value),sb=score($('tB').value),ta=sa.reduce((x,y)=>x+y),tb=sb.reduce((x,y)=>x+y);
+  const l=.5+(ta-tb)/Math.max(ta+tb,1)*.8;let A=0,B=0;
+  [...P.children].forEach((j,i)=>setTimeout(()=>{
+    const v=Math.random()<Math.min(Math.max(l+(Math.random()-.5)*.22,.07),.93);
+    v?A++:B++;j.className='j '+(v?'va':'vb');j.textContent=v?'A':'B';
+    if(i===n-1)setTimeout(()=>done(n,A,B,nA,nB,st,sa,sb),550);
+  },500+i*430));
+}
+function done(n,A,B,nA,nB,st,sa,sb){
+  const w=A>B?nA:nB,hi=Math.max(A,B),lo=Math.min(A,B),close=hi-lo<=1;
+  $('bl').textContent=n+' judges have voted';
+  $('vh').textContent=close?'Split decision: '+w+' edges it '+hi+'–'+lo:w+' wins '+hi+'–'+lo;
+  $('vp').textContent=close?'It was close. The bench agreed on the facts but weighed the apology and the effort differently.':'The bench found '+w+'’s account more reasonable and more consistent with what both sides admitted.';
+  const rows=[['Facts',0],['Fairness',1],['Effort',2]];
+  $('mt').innerHTML=[[nA,sa,'var(--a)'],[nB,sb,'var(--b)']].map(([nm,s,c])=>'<div>'+rows.map(([r,i])=>'<div class="m"><span>'+r+'</span><div><i style="background:'+c+'" data-w="'+s[i]+'"></i></div><span>'+s[i]+'</span></div>').join('')+'</div>').join('');
+  $('vd').classList.add('on');$('ba').style.width='0';$('bb').style.width='0';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{$('ba').style.width=A/n*100+'%';$('bb').style.width=B/n*100+'%';document.querySelectorAll('#mt i').forEach(i=>i.style.width=i.dataset.w+'%')}));
+  $('pa').textContent=nA+' receives '+Math.round(st*2*A/n)+' GEN';
+  $('pb').textContent=nB+' receives '+Math.round(st*2*B/n)+' GEN';
+  busy=false;$('go').disabled=false;$('go').textContent='Call the bench again';
+  $('appeal').disabled=n>5;$('appeal').textContent=n>5?'Appeal used':'Appeal to 11 judges';
+}
+$('go').onclick=()=>{if(!$('tA').value.trim()||!$('tB').value.trim()){toast('Add both sides to open the case');return}run(5)};
+$('appeal').onclick=()=>run(11);
+$('share').onclick=()=>{const u='https://beefcourt.xyz/case/'+$('cn').textContent.match(/\d+/)[0];
+  try{navigator.clipboard.writeText(u).then(()=>toast('Case link copied'),()=>toast('Link: '+u))}catch(e){toast('Link: '+u)}};
+/* Wallet UI. AGENT: replace the simulated branch with real EIP-1193 / EIP-6963 + genlayer-js (Studionet) logic. */
+let acct=null;const wm=$('wm');
+const short=a=>a.slice(0,6)+'…'+a.slice(-4);
+function setAcct(a){acct=a;const w=$('wallet');$('net').hidden=!a;w.textContent=a?short(a):'Connect wallet';w.classList.toggle('ghost',!a);w.classList.toggle('brass',!!a)}
+$('wallet').onclick=()=>{if(acct){setAcct(null);toast('Wallet disconnected')}else wm.classList.add('on')};
+$('wx').onclick=()=>wm.classList.remove('on');
+wm.onclick=e=>{if(e.target===wm)wm.classList.remove('on')};
+addEventListener('keydown',e=>{if(e.key==='Escape')wm.classList.remove('on')});
+document.querySelectorAll('.wopt').forEach(b=>b.onclick=async()=>{
+  wm.classList.remove('on');let a=null;
+  try{if(window.ethereum){const r=await window.ethereum.request({method:'eth_requestAccounts'});a=r[0]}}catch(e){toast('Connection rejected');return}
+  if(!a){a='0x7a3F9c21B4e80d5A6c1E92f0b3D74aC8e1f21c9D';toast('Demo mode: simulated '+b.dataset.w+' wallet')}else toast(b.dataset.w+' connected');
+  setAcct(a)});
+load(0);
+</script>
+</body>
+</html>
