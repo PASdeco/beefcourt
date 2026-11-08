@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "crons": [],
+  "regions": ["iad1"],
+  "env": {
+    "GENLAYER_NETWORK": "studionet",
+    "GENLAYER_RPC": "https://studio.genlayer.com/api",
+    "NEXT_PUBLIC_NETWORK": "studionet",
+    "NEXT_PUBLIC_GENLAYER_RPC_URL": "https://studio.genlayer.com/api",
+    "NEXT_PUBLIC_GENLAYER_EXPLORER": "https://explorer-studio.genlayer.com",
+    "NEXT_PUBLIC_SITE_URL": "https://gen-beefcourt.vercel.app",
+    "BEEFCOURT_CONTRACT_ADDRESS": "0xf22732FaF45762A14a2418a46671E0393bAFd22F",
+    "NEXT_PUBLIC_CONTRACT_ADDRESS": "0xf22732FaF45762A14a2418a46671E0393bAFd22F"
+  }
+}
