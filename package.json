@@ -1,0 +1,41 @@
+{
+  "name": "beefcourt",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:contract": "python -m pytest tests/direct -q",
+    "deploy": "node scripts/deploy.mjs",
+    "seed": "node scripts/seed.mjs"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.104.5",
+    "@walletconnect/ethereum-provider": "^2.26.0",
+    "clsx": "^2.1.1",
+    "genlayer-js": "^1.1.8",
+    "next": "15.5.28",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "viem": "^2.55.19"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "eslint": "^9.38.0",
+    "eslint-config-next": "15.5.28",
+    "tailwindcss": "^4.1.13",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "overrides": {
+    "postcss": "^8.5.31"
+  }
+}
